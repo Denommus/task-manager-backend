@@ -1,0 +1,8 @@
+cradle:
+  stack:
+    - path: "./test"
+      component: "task-manager-backend:task-manager-backend-tests"
+    - path: "./app"
+      component: "task-manager-backend:task-manager-backend-exe"
+    - path: "./src"
+      component: "task-manager-backend:lib"
