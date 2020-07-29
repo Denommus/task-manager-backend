@@ -34,7 +34,7 @@ addTask :: NewTask -> Update Database ()
 addTask (NewTask tName) = do
   tks <- use tasks
   let tId = maybe 1 ((+1) . fst) $ M.lookupMax tks
-  tasks . ix tId .= Task tName False
+  tasks %= M.insert tId (Task tName False)
 
 updateTask :: ToggleTask -> Update Database ()
 updateTask (ToggleTask tId) = tasks . ix tId %= toggle
