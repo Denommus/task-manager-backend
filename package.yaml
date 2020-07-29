@@ -22,7 +22,19 @@ description:         Please see the README on GitHub at <https://github.com/Deno
 dependencies:
 - base >= 4.7 && < 5
 - servant
+- servant-server
 - acid-state
+- text
+- aeson
+- mtl
+- safecopy
+- vector
+- warp
+
+default-extensions:
+- OverloadedStrings
+- DataKinds
+- TypeOperators
 
 library:
   source-dirs: src
