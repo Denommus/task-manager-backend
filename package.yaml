@@ -28,8 +28,8 @@ dependencies:
 - aeson
 - mtl
 - safecopy
-- vector
 - warp
+- containers
 
 default-extensions:
 - OverloadedStrings

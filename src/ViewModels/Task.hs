@@ -1,7 +1,9 @@
 {-# LANGUAGE TemplateHaskell #-}
 module ViewModels.Task (
   Task (..),
-  NewTask (..)
+  NewTask (..),
+  ToggleTask (..),
+  QueryTask (..)
   ) where
 
 import Data.Text
@@ -22,7 +24,6 @@ import Data.SafeCopy
 
 -- Exported View Models
 data Task = Task {
-  taskId :: Integer,
   taskName :: Text,
   taskFinished :: Bool
   }
@@ -33,16 +34,25 @@ newtype NewTask = NewTask {
   }
   deriving (Show)
 
+newtype ToggleTask = ToggleTask {
+  updateTaskId :: Integer
+  }
+
+data QueryTask = QueryTask {
+  queryTaskId :: Integer,
+  queryTaskName :: Text,
+  queryTaskFinished :: Bool
+  }
+
 -- Their JSON encoders and decoders
 
 instance ToJSON Task where
-  toJSON (Task tId tName tFinished) =
-    object ["id" .= tId, "name" .= tName, "finished" .= tFinished]
+  toJSON (Task tName tFinished) =
+    object ["name" .= tName, "finished" .= tFinished]
 
 instance FromJSON Task where
   parseJSON = withObject "Task" $ \v -> Task
-    <$> v .: "id"
-    <*> v .: "name"
+    <$> v .: "name"
     <*> v .: "finished"
 
 instance ToJSON NewTask where
@@ -53,6 +63,27 @@ instance FromJSON NewTask where
   parseJSON = withObject "NewTask" $ \v -> NewTask
     <$> v .: "name"
 
+instance ToJSON ToggleTask where
+  toJSON (ToggleTask tId) =
+    object ["id" .= tId]
+
+instance FromJSON ToggleTask where
+  parseJSON = withObject "toggleTask" $ \v -> ToggleTask
+    <$> v .: "id"
+
+instance ToJSON QueryTask where
+  toJSON (QueryTask tId tName tFinished) =
+    object ["id" .= tId, "name" .= tName, "finished" .= tFinished]
+
+instance FromJSON QueryTask where
+  parseJSON = withObject "Task" $ \v -> QueryTask
+    <$> v .: "id"
+    <*> v .: "name"
+    <*> v .: "finished"
+
+
 
 $(deriveSafeCopy 0 'base ''Task)
 $(deriveSafeCopy 0 'base ''NewTask)
+$(deriveSafeCopy 0 'base ''ToggleTask)
+$(deriveSafeCopy 0 'base ''QueryTask)

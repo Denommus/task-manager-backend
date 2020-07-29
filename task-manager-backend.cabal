@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 34b7139cef28d6c1e5c1c903d777e12076689d449ba8716188f5c0faa9e520eb
+-- hash: e6e488c8dc21fa7c80519b516d27971f2b604f70e8b00ef87cdc9b5d37430643
 
 name:           task-manager-backend
 version:        0.1.0.0
@@ -40,12 +40,12 @@ library
       acid-state
     , aeson
     , base >=4.7 && <5
+    , containers
     , mtl
     , safecopy
     , servant
     , servant-server
     , text
-    , vector
     , warp
   default-language: Haskell2010
 
@@ -61,13 +61,13 @@ executable task-manager-backend-exe
       acid-state
     , aeson
     , base >=4.7 && <5
+    , containers
     , mtl
     , safecopy
     , servant
     , servant-server
     , task-manager-backend
     , text
-    , vector
     , warp
   default-language: Haskell2010
 
@@ -84,12 +84,12 @@ test-suite task-manager-backend-test
       acid-state
     , aeson
     , base >=4.7 && <5
+    , containers
     , mtl
     , safecopy
     , servant
     , servant-server
     , task-manager-backend
     , text
-    , vector
     , warp
   default-language: Haskell2010

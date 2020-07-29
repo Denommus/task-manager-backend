@@ -6,30 +6,27 @@ import Servant
 import ViewModels.Task
 import Database
 import Data.Acid
-import qualified Data.Vector as V
 import Control.Monad.IO.Class (liftIO)
 
-type TaskAPI = "tasks" :> Get '[JSON] [Task]
-  :<|> "tasks" :> ReqBody '[JSON] NewTask :> Post '[JSON] [Task]
-  :<|> "tasks" :> ReqBody '[JSON] Task :> Put '[JSON] [Task]
-  :<|> "tasks" :> Delete '[JSON] [Task]
+type TaskAPI = "tasks" :> Get '[JSON] [QueryTask]
+  :<|> "tasks" :> ReqBody '[JSON] NewTask :> Post '[JSON] [QueryTask]
+  :<|> "tasks" :> ReqBody '[JSON] ToggleTask :> Put '[JSON] [QueryTask]
+  :<|> "tasks" :> Delete '[JSON] [QueryTask]
 
-listTasks :: AcidState Database -> Handler [Task]
-listTasks database = do
-  tasks <- liftIO $ query database ListTasks 
-  return $ V.toList tasks
+listTasks :: AcidState Database -> Handler [QueryTask]
+listTasks database = liftIO $ query database ListTasks
 
-addTask :: AcidState Database -> NewTask -> Handler [Task]
+addTask :: AcidState Database -> NewTask -> Handler [QueryTask]
 addTask database newTask = do
   liftIO $ update database $ AddTask newTask
   listTasks database
 
-updateTask :: AcidState Database -> Task -> Handler [Task]
+updateTask :: AcidState Database -> ToggleTask -> Handler [QueryTask]
 updateTask database task = do
   liftIO $ update database $ UpdateTask task
   listTasks database
 
-deleteTasks :: AcidState Database -> Handler [Task]
+deleteTasks :: AcidState Database -> Handler [QueryTask]
 deleteTasks database = do
   liftIO $ update database DeleteTasks
   listTasks database
