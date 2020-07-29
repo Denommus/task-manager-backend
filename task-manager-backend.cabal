@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e6e488c8dc21fa7c80519b516d27971f2b604f70e8b00ef87cdc9b5d37430643
+-- hash: 43c4f5c7b940f495f3050d6baa5d8090ee96ce301ea88e379f27b83a0d0b5b03
 
 name:           task-manager-backend
 version:        0.1.0.0
@@ -41,6 +41,7 @@ library
     , aeson
     , base >=4.7 && <5
     , containers
+    , lens
     , mtl
     , safecopy
     , servant
@@ -62,6 +63,7 @@ executable task-manager-backend-exe
     , aeson
     , base >=4.7 && <5
     , containers
+    , lens
     , mtl
     , safecopy
     , servant
@@ -85,6 +87,7 @@ test-suite task-manager-backend-test
     , aeson
     , base >=4.7 && <5
     , containers
+    , lens
     , mtl
     , safecopy
     , servant

@@ -3,7 +3,14 @@ module ViewModels.Task (
   Task (..),
   NewTask (..),
   ToggleTask (..),
-  QueryTask (..)
+  QueryTask (..),
+  taskName,
+  taskFinished,
+  newTaskName,
+  toggleTaskId,
+  queryTaskId,
+  queryTaskName,
+  queryTaskFinished
   ) where
 
 import Data.Text
@@ -20,28 +27,29 @@ import Data.Aeson (
   pairs
   )
 import Data.SafeCopy
+import Control.Lens (makeLenses)
 
 
 -- Exported View Models
 data Task = Task {
-  taskName :: Text,
-  taskFinished :: Bool
+  _taskName :: Text,
+  _taskFinished :: Bool
   }
   deriving (Show)
 
 newtype NewTask = NewTask {
-  newTaskName :: Text
+  _newTaskName :: Text
   }
   deriving (Show)
 
 newtype ToggleTask = ToggleTask {
-  updateTaskId :: Integer
+  _toggleTaskId :: Integer
   }
 
 data QueryTask = QueryTask {
-  queryTaskId :: Integer,
-  queryTaskName :: Text,
-  queryTaskFinished :: Bool
+  _queryTaskId :: Integer,
+  _queryTaskName :: Text,
+  _queryTaskFinished :: Bool
   }
 
 -- Their JSON encoders and decoders
@@ -81,7 +89,10 @@ instance FromJSON QueryTask where
     <*> v .: "name"
     <*> v .: "finished"
 
-
+$(makeLenses ''Task)
+$(makeLenses ''NewTask)
+$(makeLenses ''ToggleTask)
+$(makeLenses ''QueryTask)
 
 $(deriveSafeCopy 0 'base ''Task)
 $(deriveSafeCopy 0 'base ''NewTask)

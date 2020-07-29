@@ -30,6 +30,7 @@ dependencies:
 - safecopy
 - warp
 - containers
+- lens
 
 default-extensions:
 - OverloadedStrings
