@@ -44,7 +44,6 @@ listTasks = do
 
 addTask :: NewTask -> Update Database ()
 addTask (NewTask tName) = do
-  tks <- use tasks
   tId <- (+1) <$> use lastId
   tasks %= M.insert tId (Task tName False)
   lastId .= tId
