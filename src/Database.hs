@@ -37,9 +37,7 @@ instance Migrate Database where
     }
 
 listTasks :: Query Database [QueryTask]
-listTasks = do
-  tks <- view tasks
-  return $ taskToQueryTask <$> M.toAscList tks
+listTasks = fmap taskToQueryTask . M.toAscList <$> view tasks
   where taskToQueryTask (tId, Task tName tFinished) = QueryTask tId tName tFinished
 
 addTask :: NewTask -> Update Database ()
